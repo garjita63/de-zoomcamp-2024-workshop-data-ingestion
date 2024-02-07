@@ -1,4 +1,22 @@
+## Introducing dlt
 
+dlt is a python library created for the purpose of assisting data engineers to build simpler, faster and more robust pipelines with minimal effort.
+
+You can think of dlt as a loading tool that implements the best practices of data pipelines enabling you to just “use” those best practices in your own pipelines, in a declarative way.
+
+This enables you to stop reinventing the flat tyre, and leverage dlt to build pipelines much faster than if you did everything from scratch.
+
+dlt automates much of the tedious work a data engineer would do, and does it in a way that is robust. dlt can handle things like:
+
+Schema: Inferring and evolving schema, alerting changes, using schemas as data contracts.
+Typing data, flattening structures, renaming columns to fit database standards. In our example we will pass the “data” you can see above and see it normalised.
+Processing a stream of events/rows without filling memory. This includes extraction from generators.
+Loading to a variety of dbs or file formats.
+Let’s use it to load our nested json to duckdb:
+
+Here’s how you would do that on your local machine. I will walk you through before showing you in colab as well.
+
+First, install dlt
 
 Command prompt
 ```
@@ -89,12 +107,106 @@ Browser http://localhost:8501/
 
 Navigation --> Explore data
 
-![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/f51fbd3f-d600-4c57-9702-d95c350552e0)
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/d264acee-5d51-46b5-8417-821aa8238e0d)
 
 Navigation --> Load info
 
-![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/b38fe7b2-6b6f-4994-8460-c190393ac986)
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/fbbb0ef6-96d7-4784-9c41-b38326a58241)
 
 
+## Incremental loading
+
+Incremental loading means that as we update our datasets with the new data, we would only load the new data, as opposed to making a full copy of a source’s data all over again and replacing the old version.
+
+By loading incrementally, our pipelines run faster and cheaper.
+
+dlt currently supports 2 ways of loading incrementally:
+Append:
+We can use this for immutable or stateless events (data that doesn’t change), such as taxi rides - For example, every day there are new rides, and we could load the new ones only instead of the entire history.
+We could also use this to load different versions of stateful data, for example for creating a “slowly changing dimension” table for auditing changes. For example, if we load a list of cars and their colors every day, and one day one car changes color, we need both sets of data to be able to discern that a change happened.
+Merge:
+We can use this to update data that changes.
+For example, a taxi ride could have a payment status, which is originally “booked” but could later be changed into “paid”, “rejected” or “cancelled”
+
+
+Here is how you can think about which method to use:
+
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/a3ce3f2c-fadb-4912-859a-1a9598a68438)
+
+
+If you want to keep track of when changes occur in stateful data (slowly changing dimension) then you will need to append the data
+
+
+Let’s do a merge example together:
+💡 This is the bread and butter of data engineers pulling data, so follow along.
+
+In our previous example, the payment status changed from "booked" to “cancelled”. Perhaps Jack likes to fraud taxis and that explains his low rating. Besides the ride status change, he also got his rating lowered further.
+The merge operation replaces an old record with a new one based on a key. The key could consist of multiple fields or a single unique id. We will use record hash that we created for simplicity. If you do not have a unique key, you could create one deterministically out of several fields, such as by concatenating the data and hashing it.
+A merge operation replaces rows, it does not update them. If you want to update only parts of a row, you would have to load the new data by appending it and doing a custom transformation to combine the old and new data.
+In this example, the score of the 2 drivers got lowered and we need to update the values. We do it by using merge write disposition, replacing the records identified by record hash present in the new data.
+
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/91b2ae26-298c-4488-8203-3cbf413c13e6)
+
+Python prompt
+```
+data = [
+    {
+        "vendor_name": "VTS",
+		"record_hash": "b00361a396177a9cb410ff61f20015ad",
+        "time": {
+            "pickup": "2009-06-14 23:23:00",
+            "dropoff": "2009-06-14 23:48:00"
+        },
+        "Trip_Distance": 17.52,
+        "coordinates": {
+            "start": {
+                "lon": -73.787442,
+                "lat": 40.641525
+            },
+            "end": {
+                "lon": -73.980072,
+                "lat": 40.742963
+            }
+        },
+        "Rate_Code": None,
+        "store_and_forward": None,
+        "Payment": {
+            "type": "Credit",
+            "amt": 20.5,
+            "surcharge": 0,
+            "mta_tax": None,
+            "tip": 9,
+            "tolls": 4.15,
+			"status": "cancelled"
+        },
+        "Passenger_Count": 2,
+        "passengers": [
+            {"name": "John", "rating": 4.4},
+            {"name": "Jack", "rating": 3.6}
+        ],
+        "Stops": [
+            {"lon": -73.6, "lat": 40.6},
+            {"lon": -73.5, "lat": 40.5}
+        ]
+    },
+]
+
+# define the connection to load to. 
+# We now use duckdb, but you can switch to Bigquery later
+pipeline = dlt.pipeline(destination='duckdb', dataset_name='taxi_rides')
+
+# run the pipeline with default settings, and capture the outcome
+info = pipeline.run(data, 
+					table_name="users", 
+					write_disposition="merge", 
+					merge_key="record_hash")
+
+# show the outcome
+print(info)
+```
+
+Output
+
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/7bd8e945-b71f-46c2-9dde-ec9af2dd2b6f)
 
 
