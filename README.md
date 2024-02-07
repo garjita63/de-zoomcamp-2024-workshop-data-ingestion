@@ -71,17 +71,30 @@ Command prompt<br>
 source ./env/bin/activate
 ```
 ```
-# for first time install pandas
+# for first, time install pandas
 pip install pandas
 ```
 ```
-# for first time install streamlit
+# for first, time install streamlit
 pip install streamlit
 ```
 ```
 dlt pipeline taxi_data show
 ```
 Output<br>
+
 ![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/b886eb22-c09e-4a82-941c-8e5f29605e6e)
+
+Browser http://localhost:8501/
+
+Navigation --> Explore data
+
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/f51fbd3f-d600-4c57-9702-d95c350552e0)
+
+Navigation --> Load info
+
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/b38fe7b2-6b6f-4994-8460-c190393ac986)
+
+
 
 
