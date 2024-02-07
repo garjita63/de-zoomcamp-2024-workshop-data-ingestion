@@ -59,6 +59,7 @@ data = [
     },
 ]
 ```
+Output<br>
 Pipeline taxi_data load step completed in 1.69 seconds<br>
 1 load package(s) were loaded to destination duckdb and into dataset taxi_rides<br>
 The duckdb destination used duckdb:////mnt/c/WINDOWS/system32/taxi_data.duckdb location to store data<br>
