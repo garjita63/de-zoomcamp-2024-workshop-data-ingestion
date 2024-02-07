@@ -65,3 +65,23 @@ Pipeline taxi_data load step completed in 1.69 seconds<br>
 The duckdb destination used duckdb:////mnt/c/WINDOWS/system32/taxi_data.duckdb location to store data<br>
 Load package 1707269084.1495888 is LOADED and contains no failed jobs<br>
 
+Open other OS session<br>
+Command prompt<br>
+```
+source ./env/bin/activate
+```
+```
+# for first time install pandas
+pip install pandas
+```
+```
+# for first time install streamlit
+pip install streamlit
+```
+```
+dlt pipeline taxi_data show
+```
+Output<br>
+![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/b886eb22-c09e-4a82-941c-8e5f29605e6e)
+
+
