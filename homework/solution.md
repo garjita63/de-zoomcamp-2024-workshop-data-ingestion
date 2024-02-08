@@ -11,24 +11,35 @@ C: 8.382332347441762
 D: 9.123332347441762
 
 
-**Answer 1: C: 8.382332347441762**<br>
+**Answer 1: C: 8.382332347441762**
+
 ![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/b384c0e0-ffc4-47c6-9081-cd79094fd0ee)
 
 
 Question 2: What is the 13th number yielded by the generator?
+
 A: 4.236551275463989
+
 B: 3.605551275463989
+
 C: 2.345551275463989
+
 D: 5.678551275463989
 
+
 **Answer 2: B: 3.605551275463989**
+
 ![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/179ac2e1-20f2-45ac-95ab-e518a7214db8)
 
 
 Question 3: Append the 2 generators. After correctly appending the data, calculate the sum of all ages of people.
+
 A: 353
+
 B: 365
+
 C: 378
+
 D: 390
 
 **Answer 3: A: 353**
@@ -85,11 +96,14 @@ print(info)
 ![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/80f7a893-ca33-4ff0-9656-6c8526856edd)
 
 
-
 Question 4: Merge the 2 generators using the ID column. Calculate the sum of ages of all the people loaded as described above.
+
 A: 205
+
 B: 213
+
 C: 221
+
 D: 230
 
 **Answer 4:**
