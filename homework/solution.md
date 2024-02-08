@@ -1,5 +1,5 @@
 ## Homework
-<br>
+
 Question 1: What is the sum of the outputs of the generator for limit = 5?<br>
 A: 10.23433234744176
 B: 7.892332347441762
