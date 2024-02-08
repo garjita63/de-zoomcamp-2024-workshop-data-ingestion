@@ -1,11 +1,16 @@
 ## Homework
 
-Question 1: What is the sum of the outputs of the generator for limit = 5?<br>
-A: 10.23433234744176  <br>
-B: 7.892332347441762  <br>
-C: 8.382332347441762  <br>
-D: 9.123332347441762  <br>
-<br>
+Question 1: What is the sum of the outputs of the generator for limit = 5?
+
+A: 10.23433234744176
+
+B: 7.892332347441762
+
+C: 8.382332347441762
+
+D: 9.123332347441762
+
+
 **Answer 1: C: 8.382332347441762**<br>
 ![image](https://github.com/garjita63/de-zoomcamp-2024-homework-workshop-data-ingestion/assets/77673886/b384c0e0-ffc4-47c6-9081-cd79094fd0ee)
 
