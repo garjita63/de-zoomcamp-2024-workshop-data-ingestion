@@ -98,15 +98,15 @@ print(info)
 
 Question 4: Merge the 2 generators using the ID column. Calculate the sum of ages of all the people loaded as described above.
 
-A: 205
+A: 215
 
-B: 213
+B: 266
 
-C: 221
+C: 241
 
-D: 230
+D: 258
 
-**Answer 4:**
+**Answer 4: B: 266**
 ```
 import dlt
 import json
